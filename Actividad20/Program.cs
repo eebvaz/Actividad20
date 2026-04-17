@@ -91,13 +91,13 @@ class Program
         Console.WriteLine("Ingrese el nobmre: ");
         nombre = Console.ReadLine();    
         Console.WriteLine("Ingrese su Dpi: ");
-        while (!int.TryParse(Console.ReadLine(), out dpi))
+        while (!int.TryParse(Console.ReadLine(), out dpi) || dpi == 13)
         {
             Console.WriteLine("Dato erroneo");
         }
         Console.WriteLine("Ingrese la edad: ");
 
-        while (!int.TryParse(Console.ReadLine(), out edad))
+        while (!int.TryParse(Console.ReadLine(), out edad) || edad < 0)
         {
             Console.WriteLine("Dato erroneo");
         }
