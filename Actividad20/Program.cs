@@ -3,7 +3,7 @@ class Paciente
 {
     private string nombre;
     private long dpi;
-    private int telefono;
+    private long telefono;
     private int edad;
 
     public string Nombre {
@@ -34,11 +34,11 @@ class Paciente
         }
 
     }
-    public int Telefono
+    public long Telefono
     {
         get { return telefono; }
         set {
-            if (value == 8)
+            if (value.ToString().Length == 8)
             telefono = value;
             else
             {
@@ -60,7 +60,7 @@ class Paciente
 
     }
 
-    public Paciente(string nombre, long dpi, int telefono, int edad)
+    public Paciente(string nombre, long dpi, long telefono, int edad)
     {
         this.nombre = nombre;
         this.dpi = dpi;
@@ -83,34 +83,59 @@ class Program
 {
     static void Main()
     {
-        string nombre; int dpi;
-        int telefono; int edad;
+        string nombre; long dpi;
+        long telefono; int edad;
+        bool validacion;
 
 
         Console.WriteLine("Solicitud de Pacientes");
-        Console.WriteLine("Ingrese el nobmre: ");
-        nombre = Console.ReadLine();    
-        Console.WriteLine("Ingrese su Dpi: ");
-        while (!int.TryParse(Console.ReadLine(), out dpi) || dpi == 13)
+        Console.WriteLine("Ingrese el nombre: ");
+        nombre = Console.ReadLine();
+
+
+        do
         {
-            Console.WriteLine("Dato erroneo");
-        }
-        Console.WriteLine("Ingrese la edad: ");
+            Console.Write("Ingrese su DPI: ");
+            validacion = long.TryParse(Console.ReadLine(), out dpi);
 
-        while (!int.TryParse(Console.ReadLine(), out edad) || edad < 0)
+            if (!validacion || dpi.ToString().Length != 13)
+            {
+                Console.WriteLine("El DPI no valido. Debe tener 13 digitos.");
+                validacion = false;
+            }
+
+        } while (!validacion);
+
+        do
         {
-            Console.WriteLine("Dato erroneo");
-        }
+            Console.Write("Ingrese la edad: ");
+            validacion = int.TryParse(Console.ReadLine(), out edad);
+            if (!validacion || edad < 0)
+            {
+                Console.WriteLine("Edad no valida. Ingrese denuevo.");
+                validacion = false;
+            }
+        } while (!validacion);
 
-        Console.WriteLine("Ingrese el numero telefonico");
 
-        while (!int.TryParse(Console.ReadLine(), out telefono))
+        do
         {
-            Console.WriteLine("Dato erroneo");
-        }
+            Console.Write("Ingrese su numero telefonico: ");
+            validacion = long.TryParse(Console.ReadLine(), out telefono);
 
-        Paciente datos = new Paciente (nombre,dpi,telefono,edad);
+            if (!validacion || telefono.ToString().Length != 8)
+            {
+                Console.WriteLine("El numero telefonico debe de tener 8 digitos.");
+                validacion = false;
+            }
+
+        } while (!validacion);
+
+        Console.Clear();
+        Paciente datos = new Paciente (nombre ,dpi, telefono , edad);
         datos.MostrarInformacion();
+
+        Console.ReadKey();
     }
 
 }
